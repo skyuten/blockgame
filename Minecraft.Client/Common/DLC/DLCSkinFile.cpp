@@ -13,6 +13,7 @@ DLCSkinFile::DLCSkinFile(const wstring &path) : DLCFile(DLCManager::e_DLCType_Sk
 	m_themeName = L"";
 	m_cape = L"";
 	m_bIsFree = false;	
+	m_bSlimArms = false;
 	m_uiAnimOverrideBitmask=0L;
 }
 
@@ -113,6 +114,9 @@ void DLCSkinFile::addParameter(DLCManager::EDLCParameterType type, const wstring
 			WCHAR wchBodyPart[10];
 			SKIN_BOX *pSkinBox = new SKIN_BOX;
 			ZeroMemory(pSkinBox,sizeof(SKIN_BOX));
+	case DLCManager::e_DLCParamType_SlimArms:
+	 m_bSlimArms = true;
+    break;
 
 #ifdef __PS3__
 			// 4J Stu - The Xbox version used swscanf_s which isn't available in GCC.

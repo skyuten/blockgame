@@ -11,6 +11,7 @@ private:
 	wstring m_cape;
 	unsigned int m_uiAnimOverrideBitmask;
 	bool m_bIsFree;
+	bool m_bSlimArms;
 	vector<SKIN_BOX *> m_AdditionalBoxes;
 
 public:

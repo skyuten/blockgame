@@ -12,6 +12,7 @@ public:
 	bool idle;
 	bool sneaking;
 	bool bowAndArrow;
+	bool slimArms;
 	bool eating;		// 4J added
 	float eating_t;			// 4J added
 	float eating_swing;	// 4J added

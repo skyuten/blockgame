@@ -47,6 +47,8 @@ public:
 
 		e_DLCParamType_Max,
 
+		e_DLCParamType_SlimArms,
+
 	};
 	static WCHAR *wchTypeNamesA[e_DLCParamType_Max];
 

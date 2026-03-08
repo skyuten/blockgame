@@ -82,14 +82,14 @@ void HumanoidModel::_init(float g, float yOffset, int texWidth, int texHeight)
     body->addHumanoidBox(-4, 0, -2, 8, 12, 4, g); // Body
     body->setPos(0, 0 + yOffset, 0);
 
-    arm0 = new ModelPart(this, 24 + 16, 16);
-    arm0->addHumanoidBox(-3, -2, -2, 4, 12, 4, g); // Arm0
-    arm0->setPos(-5, 2 + yOffset, 0);
+arm0 = new ModelPart(this, 24 + 16, 16);
+arm0->addHumanoidBox(slimArms ? -2 : -3, -2, -2, slimArms ? 3 : 4, 12, 4, g);
+arm0->setPos(-5, 2 + yOffset, 0);
 
-    arm1 = new ModelPart(this, 24 + 16, 16);
-    arm1->bMirror = true;
-    arm1->addHumanoidBox(-1, -2, -2, 4, 12, 4, g); // Arm1
-    arm1->setPos(5, 2 + yOffset, 0);
+arm1 = new ModelPart(this, 24 + 16, 16);
+arm1->bMirror = true;
+arm1->addHumanoidBox(-1, -2, -2, slimArms ? 3 : 4, 12, 4, g);
+arm1->setPos(5, 2 + yOffset, 0);
 
     leg0 = new ModelPart(this, 0, 16);
     leg0->addHumanoidBox(-2, 0, -2, 4, 12, 4, g); // Leg0
@@ -112,6 +112,7 @@ void HumanoidModel::_init(float g, float yOffset, int texWidth, int texHeight)
 	leg1->compile(1.0f/16.0f);
 	hair->compile(1.0f/16.0f);
 
+	slimArms = false;
 	holdingLeftHand=0;
 	holdingRightHand=0;
 	sneaking=false;
