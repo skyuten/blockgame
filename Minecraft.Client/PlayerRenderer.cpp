@@ -56,11 +56,23 @@ static unsigned int nametagColorForIndex(int index)
 ResourceLocation PlayerRenderer::DEFAULT_LOCATION = ResourceLocation(TN_MOB_CHAR);
 
 PlayerRenderer::PlayerRenderer() : LivingEntityRenderer( new HumanoidModel(0), 0.5f )
-{
-    humanoidModel = (HumanoidModel *) model;
 
-    armorParts1 = new HumanoidModel(1.0f);
-    armorParts2 = new HumanoidModel(0.5f);
+
+{
+humanoidModel      = (HumanoidModel *)model;
+humanoidModelSteve = humanoidModel; // unused now, but fine
+
+armorParts1        = new HumanoidModel(1.0f);      // Steve armor
+armorParts2        = new HumanoidModel(0.5f);      // Steve armor
+armorParts1Steve   = armorParts1;
+armorParts2Steve   = armorParts2;
+
+humanoidModelSlim  = new HumanoidModel(0, true);
+armorParts1Slim    = new HumanoidModel(1.0f, true);
+armorParts2Slim    = new HumanoidModel(0.5f, true);
+
+
+
 }
 
 unsigned int PlayerRenderer::getNametagColour(int index)
@@ -154,7 +166,25 @@ void PlayerRenderer::prepareSecondPassArmor(shared_ptr<LivingEntity> _player, in
 void PlayerRenderer::render(shared_ptr<Entity> _mob, double x, double y, double z, float rot, float a)
 {
 	// 4J - dynamic cast required because we aren't using templates/generics in our version
-	shared_ptr<Player> mob = dynamic_pointer_cast<Player>(_mob);
+shared_ptr<Player> mob = dynamic_pointer_cast<Player>(_mob);
+if (mob->isSlimArms())
+{
+    this->model = humanoidModelSlim;
+    humanoidModel = humanoidModelSlim;
+
+    armorParts1 = armorParts1Slim;
+    armorParts2 = armorParts2Slim;
+}
+else
+{
+    this->model = humanoidModelSteve;
+    humanoidModel = humanoidModelSteve;
+
+    armorParts1 = armorParts1Steve;
+    armorParts2 = armorParts2Steve;
+}
+
+
 
 	if(mob->hasInvisiblePrivilege()) return;
 
@@ -191,6 +221,7 @@ void PlayerRenderer::render(shared_ptr<Entity> _mob, double x, double y, double 
 	}
 
     armorParts1->sneaking = armorParts2->sneaking = humanoidModel->sneaking = mob->isSneaking();
+
 
     double yp = y - mob->heightOffset;
     if (mob->isSneaking() && !mob->instanceof(eTYPE_LOCALPLAYER))
@@ -558,6 +589,7 @@ void PlayerRenderer::renderShadow(shared_ptr<Entity> e, double x, double y, doub
 	if(app.GetGameHostOption(eGameHostOption_HostCanBeInvisible) > 0)
 	{
 		shared_ptr<Player> player = dynamic_pointer_cast<Player>(e);
+		
 		if(player != NULL && player->hasInvisiblePrivilege()) return;
 	}
 	EntityRenderer::renderShadow(e,x,y,z,pow,a);
@@ -574,4 +606,4 @@ ResourceLocation *PlayerRenderer::getTextureLocation(shared_ptr<Entity> entity)
 {
 	shared_ptr<Player> player = dynamic_pointer_cast<Player>(entity);
 	return new ResourceLocation((_TEXTURE_NAME)player->getTexture());
-}
+} // rebuild

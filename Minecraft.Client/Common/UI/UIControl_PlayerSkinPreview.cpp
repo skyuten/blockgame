@@ -257,8 +257,10 @@ void UIControl_PlayerSkinPreview::render(EntityRenderer *renderer, double x, dou
 	glPushMatrix();
 	glDisable(GL_CULL_FACE);
 
-	HumanoidModel *model = (HumanoidModel *)renderer->getModel();
-
+	// making alex models is actually so fucking horrible but i managed to do it, for anyone checking the code this is the final lines of alex models!! yay
+	PlayerRenderer *playerRenderer = (PlayerRenderer *)renderer;
+	bool isAlex = (m_backupTexture >= TN_MOB_CHAR_ALEX0 && m_backupTexture <= TN_MOB_CHAR_ALEX7);
+	HumanoidModel *model = isAlex ? playerRenderer->humanoidModelSlim : playerRenderer->humanoidModelSteve;
 	//getAttackAnim(mob, a);
 	//if (armor != NULL) armor->attackTime = model->attackTime;
 	//model->riding = mob->isRiding();

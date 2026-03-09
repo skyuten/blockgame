@@ -164,6 +164,12 @@ Player::~Player()
 	//if( containerMenu != inventoryMenu ) delete containerMenu;
 }
 
+bool Player::isSlimArms() const
+{
+    // Default skins 8–15 are Alex
+    return (m_skinIndex >= eDefaultSkins_Skin8 &&
+            m_skinIndex <= eDefaultSkins_Skin15);
+}
 void Player::registerAttributes()
 {
 	LivingEntity::registerAttributes();

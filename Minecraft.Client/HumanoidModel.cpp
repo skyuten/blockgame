@@ -58,13 +58,14 @@ ModelPart * HumanoidModel::AddOrRetrievePart(SKIN_BOX *pBox)
 	return pNewBox;
 }
 
-void HumanoidModel::_init(float g, float yOffset, int texWidth, int texHeight)
+void HumanoidModel::_init(float g, float yOffset, int texWidth, int texHeight, bool slim)
 {
 	this->texWidth = texWidth;
 	this->texHeight = texHeight;
+	slimArms = slim;
 
 	m_fYOffset=yOffset;
-    cloak = new ModelPart(this, 0, 0);
+	cloak = new ModelPart(this, 0, 0);
     cloak->addHumanoidBox(-5, -0, -1, 10, 16, 1, g); // Cloak
 
     ear = new ModelPart(this, 24, 0);
@@ -112,7 +113,6 @@ arm1->setPos(5, 2 + yOffset, 0);
 	leg1->compile(1.0f/16.0f);
 	hair->compile(1.0f/16.0f);
 
-	slimArms = false;
 	holdingLeftHand=0;
 	holdingRightHand=0;
 	sneaking=false;
@@ -126,20 +126,24 @@ arm1->setPos(5, 2 + yOffset, 0);
 	m_uiAnimOverrideBitmask = 0L;
 }
 
-HumanoidModel::HumanoidModel() : Model()
+
+HumanoidModel::HumanoidModel() 
+    : HumanoidModel(0, false)
 {
-	_init(0, 0, 64, 32);
 }
 
-HumanoidModel::HumanoidModel(float g) : Model()
+HumanoidModel::HumanoidModel(float g, bool slim)
 {
-	_init(g, 0, 64, 32);
+    _init(g, 0, 64, 32, slim);
 }
 
-HumanoidModel::HumanoidModel(float g, float yOffset, int texWidth, int texHeight) : Model()
+HumanoidModel::HumanoidModel(float g, float yOffset, int texWidth, int texHeight, bool slim)
 {
-	_init(g,yOffset,texWidth,texHeight);
+    _init(g, yOffset, texWidth, texHeight, slim);
 }
+
+
+
 
 void HumanoidModel::render(shared_ptr<Entity> entity, float time, float r, float bob, float yRot, float xRot, float scale, bool usecompiled)
 {	

@@ -36,6 +36,8 @@ class Scoreboard;
 class Player : public LivingEntity, public CommandSender, public ScoreHolder
 {
 public:
+	virtual bool isSlimArms() const;
+
 	static const int MAX_NAME_LENGTH = 16 + 4;
 	static const int MAX_HEALTH = 20;
 	static const int SLEEP_DURATION = 100;
@@ -402,7 +404,8 @@ public:
 	// 4J Overriding this so that we can have some different default skins
 	virtual int getTexture();		// 4J changed from wstring to int
 	void setPlayerDefaultSkin(EDefaultSkins skin);
-	EDefaultSkins getPlayerDefaultSkin()												{ return m_skinIndex; }
+	EDefaultSkins getPlayerDefaultSkin() const { return m_skinIndex; }
+
 	virtual void setCustomSkin(DWORD skinId);
 	DWORD getCustomSkin()																	{return m_dwSkinId; }
 	virtual void setCustomCape(DWORD capeId);

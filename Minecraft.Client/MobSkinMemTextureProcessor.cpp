@@ -6,35 +6,33 @@ BufferedImage *MobSkinMemTextureProcessor::process(BufferedImage *in)
     if (in == NULL) return NULL;
 
     width = 64;
-    height = 32;
-
+    height = in->getHeight();
     BufferedImage *out = new BufferedImage(width, height, BufferedImage::TYPE_INT_ARGB);
     Graphics *g = out->getGraphics();
     g->drawImage(in, 0, 0, NULL);
     g->dispose();
-
     pixels = out->getData();
-
-    setNoAlpha(0, 0, 32, 16);
-    setForceAlpha(32, 0, 64, 32);
-    setNoAlpha(0, 16, 64, 32);
-    bool hasAlpha = false;
-    for (int x = 32; x < 64; x++)
-        for (int y = 0; y < 16; y++)
-		{
-            int pix = pixels[x + y * 64];
-            if (((pix >> 24) & 0xff) < 128) hasAlpha = true;
-        }
-
-	// 4J-PB - looks like the code below is wrong, and really should be looping from 0 to <32
-    if (!hasAlpha)
-	{
+    if (height == 32)
+    {
+        setNoAlpha(0, 0, 32, 16);
+        setForceAlpha(32, 0, 64, 32);
+        setNoAlpha(0, 16, 64, 32);
+        bool hasAlpha = false;
         for (int x = 32; x < 64; x++)
             for (int y = 0; y < 16; y++)
-			{
+            {
                 int pix = pixels[x + y * 64];
                 if (((pix >> 24) & 0xff) < 128) hasAlpha = true;
             }
+        if (!hasAlpha)
+        {
+            for (int x = 32; x < 64; x++)
+                for (int y = 0; y < 16; y++)
+                {
+                    int pix = pixels[x + y * 64];
+                    if (((pix >> 24) & 0xff) < 128) hasAlpha = true;
+                }
+        }
     }
 
     return out;

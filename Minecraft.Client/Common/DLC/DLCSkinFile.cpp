@@ -109,14 +109,14 @@ void DLCSkinFile::addParameter(DLCManager::EDLCParameterType type, const wstring
 	case DLCManager::e_DLCParamType_Cape:
 		m_cape = value;
 		break;
+case DLCManager::e_DLCParamType_SlimArms:
+		m_bSlimArms = true;
+		break;
 	case DLCManager::e_DLCParamType_Box:
 		{
 			WCHAR wchBodyPart[10];
 			SKIN_BOX *pSkinBox = new SKIN_BOX;
 			ZeroMemory(pSkinBox,sizeof(SKIN_BOX));
-	case DLCManager::e_DLCParamType_SlimArms:
-	 m_bSlimArms = true;
-    break;
 
 #ifdef __PS3__
 			// 4J Stu - The Xbox version used swscanf_s which isn't available in GCC.

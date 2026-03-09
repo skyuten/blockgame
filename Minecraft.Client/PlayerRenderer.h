@@ -11,11 +11,15 @@ class PlayerRenderer : public LivingEntityRenderer
 public:
 	// 4J: Made public for use in skull renderer
 	static ResourceLocation DEFAULT_LOCATION;
-
-private:
 	HumanoidModel *humanoidModel;
     HumanoidModel *armorParts1;
     HumanoidModel *armorParts2;
+	HumanoidModel *humanoidModelSteve;
+	HumanoidModel *armorParts1Steve;
+	HumanoidModel *armorParts2Steve;
+	HumanoidModel *humanoidModelSlim;
+	HumanoidModel *armorParts1Slim;
+	HumanoidModel *armorParts2Slim;
 
 public:
 	PlayerRenderer();
