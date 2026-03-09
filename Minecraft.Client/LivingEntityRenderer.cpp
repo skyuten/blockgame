@@ -174,19 +174,21 @@ void LivingEntityRenderer::render(shared_ptr<Entity> _mob, double x, double y, d
 
 			// 4J - changed these renders to not use the compiled version of their models, because otherwise the render states set
 			// about (in particular the depth & alpha test) don't work with our command buffer versions
-			if (mob->hurtTime > 0 || mob->deathTime > 0)
-			{
-				glColor4f(br, 0, 0, 0.4f);
-				model->render(mob, wp, ws, bob, headRot - bodyRot, headRotx, fScale, false);
-				for (int i = 0; i < MAX_ARMOR_LAYERS; i++)
-				{
-					if (prepareArmorOverlay(mob, i, a) >= 0)
-					{
-						glColor4f(br, 0, 0, 0.4f);
-						armor->render(mob, wp, ws, bob, headRot - bodyRot, headRotx, fScale, false);
-					}
-				}
-			}
+if (mob->hurtTime > 0 || mob->deathTime > 0)
+{
+    glColor4f(br, 0, 0, 0.4f);
+    model->render(mob, wp, ws, bob, headRot - bodyRot, headRotx, fScale, false);
+
+    for (int i = 0; i < MAX_ARMOR_LAYERS; i++)
+    {
+        if (prepareArmorOverlay(mob, i, a) >= 0)
+        {
+            glColor4f(br, 0, 0, 0.4f);
+            armor->render(mob, wp, ws, bob, headRot - bodyRot, headRotx, fScale, false);
+        }
+    }
+}
+
 
 			if (((overlayColor >> 24) & 0xff) > 0)
 			{
@@ -347,8 +349,9 @@ void LivingEntityRenderer::renderArrows(shared_ptr<LivingEntity> mob, float a)
 
 int LivingEntityRenderer::prepareArmorOverlay(shared_ptr<LivingEntity> mob, int layer, float a)
 {
-	return prepareArmor(mob, layer, a);
+    return -1; // TU24: disable armor overlay entirely
 }
+
 
 int LivingEntityRenderer::prepareArmor(shared_ptr<LivingEntity> mob, int layer, float a) 
 {
