@@ -22,7 +22,10 @@ jobs:
     - name: Setup msbuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Build
+    - name: Build Debug Configuration
+      run: MSBuild.exe MinecraftConsoles.sln /p:Configuration=Debug /p:Platform="Windows64"
+
+    - name: Build Release Configuration
       run: MSBuild.exe MinecraftConsoles.sln /p:Configuration=Release /p:Platform="Windows64"
 
     - name: Copy required DLLs
