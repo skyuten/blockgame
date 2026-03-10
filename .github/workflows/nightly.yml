@@ -5,6 +5,7 @@ on:
 
 jobs:
   build:
+    name: Build Windows64
     runs-on: windows-latest
 
     steps:
@@ -16,17 +17,17 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Build Debug
-      run: MSBuild MinecraftConsoles.sln /t:Build /p:Configuration=Debug /p:Platform=Windows64 /m
+    - name: Build Release
+      run: MSBuild MinecraftConsoles.sln /t:Build /p:Configuration=Release /p:Platform=Windows64 /m
 
-    - name: Inspect Debug folder
+    - name: Inspect Release folder
       run: |
-           Get-ChildItem -Path "x64/Debug" -Recurse
-           $size = (Get-ChildItem -Path "x64/Debug" -Recurse | Measure-Object -Property Length -Sum).Sum
-           Write-Output "Debug folder size: $($size / 1MB) MB"
+           Get-ChildItem -Path "x64/Release" -Recurse
+           $size = (Get-ChildItem -Path "x64/Release" -Recurse | Measure-Object -Property Length -Sum).Sum
+           Write-Output "Release folder size: $($size / 1MB) MB"
            
     - name: Zip build
-      run: 7z a LCEWindows64.zip ./x64/Debug/
+      run: 7z a LCEWindows64.zip ./x64/Release/
 
     - name: Publish nightly
       uses: andelf/nightly-release@main
@@ -36,3 +37,5 @@ jobs:
         tag_name: nightly
         name: Nightly Release
         files: LCEWindows64.zip
+              ./x64/Release/Minecraft.Client.exe
+              ./x64/Release/Minecraft.Client.pdb
