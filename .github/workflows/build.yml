@@ -25,6 +25,7 @@ jobs:
             /m
   
       - name: Copy required DLLs
+        if: matrix.configuration == 'Release'
         run: |
           copy .\x64\Debug\iggy_w64.dll .\x64\Release\
           copy .\x64\Debug\mss64.dll .\x64\Release\
