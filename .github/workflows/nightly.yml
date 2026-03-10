@@ -25,16 +25,8 @@ jobs:
     - name: Build Debug Configuration
       run: MSBuild.exe MinecraftConsoles.sln /p:Configuration=Debug /p:Platform="Windows64"
 
-    - name: Build Release Configuration
-      run: MSBuild.exe MinecraftConsoles.sln /p:Configuration=Release /p:Platform="Windows64"
-
-    - name: Copy required DLLs
-      run: |
-        copy .\x64\Debug\iggy_w64.dll .\x64\Release\
-        copy .\x64\Debug\mss64.dll .\x64\Release\
-
     - name: Zip Build
-      run: 7z a -r LCEWindows64.zip ./x64/Release/*
+      run: 7z a -r LCEWindows64.zip ./x64/Debug/*
 
     - name: Update release
       uses: andelf/nightly-release@main
@@ -44,11 +36,11 @@ jobs:
         tag_name: nightly
         name: Nightly Release
         body: |
-          Requires at least Windows 7 and DirectX 11 compatible GPU to run. Compiled with MSVC v14.44.35207 in Release mode with Whole Program Optimization, as well as `/O2 /Ot /Oi /Ob3 /GF /fp:precise`.
+          Debug build with all required DLLs included.
           
           # 🚨 First time here? 🚨
-          If you've never downloaded the game before, you need to download `LCEWindows64.zip` and extract it to the folder where you'd like to keep the game. The other files are included in this `.zip` file!
+          If you've never downloaded the game before, you need to download `LCEWindows64.zip` and extract it to the folder where you'd like to keep the game.
         files: |
             LCEWindows64.zip
-            ./x64/Release/Minecraft.Client.exe
-            ./x64/Release/Minecraft.Client.pdb
+            ./x64/Debug/Minecraft.Client.exe
+            ./x64/Debug/Minecraft.Client.pdb
