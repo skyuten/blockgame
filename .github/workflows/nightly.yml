@@ -20,9 +20,12 @@ jobs:
     - name: Build Debug
       run: MSBuild MinecraftConsoles.sln /t:Build /p:Configuration=Debug /p:Platform=Windows64 /m
 
-    - name: Show build output
-      run: dir x64\Debug /s
-
+    - name: Inspect Debug folder
+      run: |
+           Get-ChildItem -Path "x64/Debug" -Recurse
+           $size = (Get-ChildItem -Path "x64/Debug" -Recurse | Measure-Object -Property Length -Sum).Sum
+           Write-Output "Debug folder size: $($size / 1MB) MB"
+           
     - name: Zip build
       run: 7z a LCEWindows64.zip ./x64/Debug/
 
