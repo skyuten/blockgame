@@ -18,12 +18,7 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: Build Debug
-      run: |
-        MSBuild MinecraftConsoles.sln ^
-          /t:Build ^
-          /p:Configuration=Debug ^
-          /p:Platform=Windows64 ^
-          /m
+      run: MSBuild MinecraftConsoles.sln /t:Build /p:Configuration=Debug /p:Platform=Windows64 /m
 
     - name: Show build output
       run: dir x64\Debug /s
